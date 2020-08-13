@@ -1,4 +1,4 @@
-// import {warn} from './util/index';
+import {warn} from './util/index';
 
 function Vue(){
     console.log('hello vue');
@@ -6,7 +6,7 @@ function Vue(){
         warn('请使用new Vue()实例化');
         // return;
     }
-    this._init();
+    // this._init();
 }
 
 export default Vue;
