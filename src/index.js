@@ -1,3 +1,9 @@
 import Vue from './Vue/index.js';
 
-const vue = Vue();
+new Vue({
+    el:'#demo',
+
+    data:{
+        message:"Hello I'm vuejs",
+    }
+});
