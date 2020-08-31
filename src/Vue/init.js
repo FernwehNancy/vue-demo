@@ -5,7 +5,7 @@ export function initMixin(Vue){
         const vm = this;
         console.log(vm.constructor);
         vm.$options = mergeOptions(
-             (vm.constructor),
+            resolveConstructorOptions(vm.constructor),
             options || {},
             vm
         )
@@ -13,7 +13,7 @@ export function initMixin(Vue){
     }
 }
 
-export function  (Ctor){
+export function resolveConstructorOptions(Ctor){
     let options = Ctor.options;
     // if(Ctor.super){
     //     const superOptions = resolveConstructorOptions(Ctor.super)
