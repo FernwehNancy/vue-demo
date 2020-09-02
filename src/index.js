@@ -1,9 +1,12 @@
-import Vue from './Vue/index.js';
+import Vue from './miniVue/index.js';
 
-new Vue({
+const app = new Vue({
     el:'#demo',
 
     data:{
         message:"Hello I'm vuejs",
     }
 });
+app.$data.message='hello I have changed';
+document.write(app.$data.message);
+// document.getElementById('con').innerHTML = app.$data.message;
