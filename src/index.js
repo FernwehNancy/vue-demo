@@ -2,11 +2,17 @@ import Vue from './miniVue/index.js';
 
 const app = new Vue({
     el:'#demo',
-
     data:{
-        message:"Hello I'm vuejs",
-    }
+        message:1,
+        a:1
+    },
 });
-app.$data.message='hello I have changed';
-document.write(app.$data.message);
-// document.getElementById('con').innerHTML = app.$data.message;
+app.$watch('message',function(newVal,val){
+    // console.log('哈哈，$watch成功')
+    console.log('watch success, newVal is'+newVal+'oldVal is'+val);
+})
+
+// setTimeout(()=>{
+//     // console.log('setTimeout')
+//     app.$data.a=5;
+// },2000)

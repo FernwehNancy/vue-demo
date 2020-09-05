@@ -9,7 +9,15 @@
 <body>
     <div id="demo">
         <h1>Hello Vue.js</h1>
+        <button id="myBtn">点我</button>
         <p id="con"></p>
     </div>
+    <script>
+        document.getElementById('myBtn').addEventListener('click',function(){
+            let count = ++app.$data.message;
+            document.getElementById('con').innerHTML = count;
+        })
+        document.getElementById('con').innerHTML = app.$data.message;
+    </script>
 </body>
 </html>
