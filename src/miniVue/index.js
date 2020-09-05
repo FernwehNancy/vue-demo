@@ -10,7 +10,10 @@ function Vue(options){
 Vue.prototype.$watch = function(expOrFn,cb,options){
     const vm = this;
     options = options || {};
-    new Watcher(vm,expOrFn,cb,options);
+    const watcher = new Watcher(vm,expOrFn,cb,options);
+    return function unwatchFn(){
+        watcher.tearndown();
+    }
 }
 
 function defineReactive(data,key,val){
@@ -51,8 +54,10 @@ class Observe{
     }
 }
 
+let uid = 0;
 class Dep{
     constructor(){
+        this.id = uid++;
         this.subs=[];
     }
 
@@ -69,7 +74,8 @@ class Dep{
         console.log('target',window.target);
         if(window.target){
             console.log('增加到sub');
-            this.addSub(window.target)
+            window.target.addDep(this);
+            // this.addSub(window.target)
         }
     }
 
@@ -95,7 +101,10 @@ function remove(arr,item){
 
 class Watcher{
     constructor(vm,expOrFn,cb){
+        console.log('hello watcher');
         this.vm=vm;
+        this.deps =[];
+        this.depIds = new Set();
         // this.getter = parsePath(expOrFn);
         // console.log('this.getter',this.getter);
         this.expOrFn = expOrFn;
@@ -119,6 +128,22 @@ class Watcher{
         const oldVal = this.value
         this.value = this.get()
         this.cb.call(this.vm,this.value,oldVal)
+    }
+
+    addDep(dep){
+        const id = dep.id;
+        if(!this.depIds.has(id)){
+            this.depIds.add(id);
+            this.deps.push(dep);
+            dep.addSub(this)
+        }
+    }
+
+    tearndown(){
+        let i = this.deps.length;
+        while(i--){
+            this.deps[i].removeSub(this);
+        }
     }
 }
 

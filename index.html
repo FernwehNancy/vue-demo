@@ -11,13 +11,20 @@
         <h1>Hello Vue.js</h1>
         <button id="myBtn">点我</button>
         <p id="con"></p>
+
+        <button id="cancelWatch">取消监听</button>
     </div>
     <script>
+        document.getElementById('con').innerHTML = app.$data.message;
         document.getElementById('myBtn').addEventListener('click',function(){
             let count = ++app.$data.message;
             document.getElementById('con').innerHTML = count;
         })
-        document.getElementById('con').innerHTML = app.$data.message;
+        document.getElementById('cancelWatch').addEventListener('click',function(){
+            const unwatch = app.$watch('message',(newVal,val)=>{})
+            unwatch();
+        })
+        // document.getElementById('con').innerHTML = app.$data.message;
     </script>
 </body>
 </html>
