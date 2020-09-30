@@ -9,6 +9,12 @@
 <body>
     <div id="demo">
         <h1>Hello Vuejs!</h1>
+        <button onclick="tapHandler()">点击我</button>
     </div>
+    <script>
+        function tapHandler(){
+            app.$data.list.push(6);
+        }
+    </script>
 </body>
 </html>
