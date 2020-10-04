@@ -9,7 +9,7 @@ function Vue(options){
 
 
 const hasProto = '__proto__' in {};
-const  arrayKeys=Object.getOwnPropertyNames(arrayMethods);
+const arrayKeys=Object.getOwnPropertyNames(arrayMethods);
 function defineReactive(data,key,val){//数据劫持
     // if(typeof val==='object'){
     //     new Observer(val);
