@@ -325,3 +325,53 @@ function isStatic(node){
         Object.keys(node).every(isStaticKey)
     ))
 }
+
+function genElement(el,state){
+    const data=el.plain ? undefined : genData(el,state);
+
+    const children = genChildren(el,state);
+    code = `_c('${el.tag}'${data ? `,${data}` : ''}${children ? `,${children}`:''})`
+    return code;
+}
+
+function genData(el,state){
+    let data='{';
+
+    if(el.key){
+        data+=`key:${el.key},`
+    }
+    if(el.ref){
+        data+=`ref:${el.ref},`
+    }
+    // pre
+    if (el.pre) {
+        data += `pre:true,`
+    }
+    data = data.replace(/,$/, '') + '}'
+    return data;
+}
+
+function getChildren(el,state){
+    const children=el.children;
+    if(children.length){
+        return `[${children.map(c=>genNode(c,state)).join(',')}]`
+    }
+}
+
+function genNode(node,state){
+    if(node.type===1){
+        return genElement(node,state)
+    }else if(node.type===3 && node.isComment){
+        return genComment(node);//注释节点
+    }else{
+        return genText(node);
+    }
+}
+
+function genComment(comment){
+    return `_el(${JSON.stringify(comment.text)})`
+}
+
+function genText(text){
+    return `_v(${text.type===2 ? text.expression :JSON.stringify(text.text)})`
+}
