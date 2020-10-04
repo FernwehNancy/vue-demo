@@ -369,7 +369,7 @@ function genNode(node,state){
 }
 
 function genComment(comment){
-    return `_el(${JSON.stringify(comment.text)})`
+    return `_e(${JSON.stringify(comment.text)})`
 }
 
 function genText(text){
