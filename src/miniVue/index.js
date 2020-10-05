@@ -1,11 +1,35 @@
 import {arrayMethods} from './Array';
+import {initEvents,eventsMixin} from './events';
 
 function Vue(options){
     console.log('init vue',options);
+    if(process.env.NODE_ENV!=='production' && !(this instanceof Vue)){
+        console.warn('应该用new关键字来调用');
+    }
+    this._init(options);
+
+    stateMixin(Vue);
+    eventsMixin(Vue);
+
+    // this.$data=options.data;
+    // this.$options=options;
+    // new Observer(this.$data);
+}
+
+Vue.prototype._init=function(options){
+    const vm=this;
     this.$data=options.data;
     this.$options=options;
     new Observer(this.$data);
+    initEvents(vm);
 }
+
+function stateMixin(Vue){
+    // Vue.prototype.$set=set;
+    // Vue.prototype.$delete=del;
+    Vue.prototype.$watch=function(expOrFn,cb,options){}
+}
+
 
 
 const hasProto = '__proto__' in {};

@@ -55,9 +55,19 @@ function createPatchFunction(backend){
 
     //返回值
     return function patch(oldVnode,vnode,hydrating,removeOnly){
-        if(idUndef(vnode)){
-            if(isDef(oldVnode)) invokeDestroyHook(oldVnode)
-            return;
+        // if(idUndef(vnode)){
+        //     if(isDef(oldVnode)) invokeDestroyHook(oldVnode)
+        //     return;
+        // }
+
+        let isInitialPatch = false;
+        const insertedVnodeQueue = [];
+
+        if(isUndef(oldVnode)){
+            isInitialPatch = true;
+            createASTElement(vnode,insertedVnodeQueue);
+        }else{
+            
         }
     }
 }
